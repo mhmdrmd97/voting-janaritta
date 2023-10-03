@@ -3,14 +3,10 @@ const bodyParser = require('body-parser');
 
 const app = express();
 app.use(bodyParser.json());
-let totalUsers = 2000;
+let totalUsers = 200;
 
 let userList = Array.from({ length: totalUsers }, (_, i) => ({ id: i + 1, votes: 0, isVotedBefore: 'N' }));
-let backup = [];
 
-backup.forEach((elem,index)=>{
-userList[elem["id"] -1] = {...userList[elem["id"] -1], ...elem}
-});
 
 app.get('/userList', (req, res) => {
   res.json(userList);
