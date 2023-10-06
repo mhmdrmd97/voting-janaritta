@@ -197,21 +197,21 @@ console.log("reqbody : ",req.body);
   const votedUser = userList.find(item => item.id === votedId);
 
   if (!user || !votedUser) { //if user id or voted id is not correct
-    return res.status(400).json({ message: 'Invalid user or voted ID.' });
+    return res.json({ message: 'Invalid user or voted ID.', value:false });
   }
 
   if (user == votedUser) { //if user cannot vote for himself
-    return res.status(400).json({ message: 'user cannot vote for him/her self.' });
+    return res.json({ message: 'user cannot vote for him/her self.', value:false });
   }
 
 if(user.isVotedBefore === 'Y'){ //if user already voted he cannot vote again
- return   res.status(400).json({ message: 'User has already voted.' });
+ return   res.json({ message: 'User has already voted.', value:false });
 }
 
     votedUser.votes++;
     user.isVotedBefore = 'Y';
 
-    res.json({ message: 'Vote recorded successfully.' });
+    res.json({ message: 'Vote recorded successfully.', value:true });
   
 });
 
