@@ -188,6 +188,12 @@ app.post('/isValidUser', (req, res) => {
   );
 });
 
+app.post('/resetUsers', (req, res) => {
+
+  var userSearch =[...userList.map(({id})=>({id, votes: 0, isVotedBefore: 'N' }))];
+  res.json({message: 'users reseted successfully', value:true,userObj:userSearch});
+});
+
 app.post('/vote', (req, res) => {
   const userId = req.body.vote_from;
   const votedId = req.body.vote_to;
