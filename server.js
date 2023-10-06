@@ -197,21 +197,21 @@ console.log("reqbody : ",req.body);
   const votedUser = userList.find(item => item.id === votedId);
 
   if (!user || !votedUser) { //if user id or voted id is not correct
-    return res.json({ message: 'Invalid user or voted ID.', value:false });
+    return res.json({ message: 'Invalid user or voted ID.',messageAr:'عذرا,الرجاء ادخال اسم المشترك بشكل صحيح', value:false });
   }
 
   if (user == votedUser) { //if user cannot vote for himself
-    return res.json({ message: 'user cannot vote for him/her self.', value:false });
+    return res.json({ message: 'user cannot vote for him/her self.',messageAr:'عذرا,لا يمكنك التصويت لنفسك', value:false });
   }
 
 if(user.isVotedBefore === 'Y'){ //if user already voted he cannot vote again
- return   res.json({ message: 'User has already voted.', value:false });
+ return   res.json({ message: 'User has already voted.',messageAr: 'عذرا,لا يمكنك التصويت لانك قمت بالتصويت  من قبل', value:false });
 }
 
     votedUser.votes++;
     user.isVotedBefore = 'Y';
 
-    res.json({ message: 'Vote recorded successfully.', value:true });
+    res.json({ message: 'Vote recorded successfully.',messageAr:'تمت عملية التصويت بنجاح', value:true });
   
 });
 
