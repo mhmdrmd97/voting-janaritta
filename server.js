@@ -173,6 +173,16 @@ app.get('/userList', (req, res) => {
   res.json(userList);
 });
 
+app.post('/isValidUser', (req, res) => {
+  console.log("user search :", userList.find(({id})=>id==req.body.vote_from))
+  var userSearch =userList.find(({id})=>id==req.body.vote_from);
+  res.json(userSearch != undefined?
+  {message: 'valid user.', value:true,userObj:userSearch}
+  :
+  {message: 'Invalid user or voted ID.', value:false, userObj:{id:  '-1', votes: -1, isVotedBefore: '-1'}}
+  );
+});
+
 app.post('/vote', (req, res) => {
   const userId = req.body.vote_from;
   const votedId = req.body.vote_to;
