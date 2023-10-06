@@ -190,8 +190,8 @@ app.post('/isValidUser', (req, res) => {
 
 app.post('/resetUsers', (req, res) => {
 
-  var userSearch =[...userList.map(({id})=>({id, votes: 0, isVotedBefore: 'N' }))];
-  res.json({message: 'users reseted successfully', value:true,userObj:userSearch});
+  userList =[...userList.map(({id})=>({id, votes: 0, isVotedBefore: 'N' }))];
+  res.json({message: 'users reseted successfully', value:true,userObj:userList});
 });
 
 app.post('/vote', (req, res) => {
