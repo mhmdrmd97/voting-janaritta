@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const fs = require('fs');
 
 const app = express();
 app.use((req, res, next) => {
@@ -174,8 +175,19 @@ let userList = [
     { id:  'Joan Baker', votes: 0, isVotedBefore: 'N',canAttendMessage:'', }
   ];
 
+  function backupUserList() {
+    const userListJson = JSON.stringify(userList, null, 2);
+
+    fs.writeFile('userListBackup.txt', userListJson, (err) => {
+        if (err) throw err;
+        console.log('User list saved to userListBackup.txt');
+    });
+}
+
+
 app.get('/userList', (req, res) => {
   res.json(userList);
+  backupUserList();
 });
 
 app.post('/isValidUser', (req, res) => {
@@ -222,7 +234,8 @@ if(canAttendMessage=="" || canAttendMessage==" " || canAttendMessage==null || ca
     votedUser.votes++;
     user.isVotedBefore = 'Y';
     user.canAttendMessage = canAttendMessage;
-
+    backupUserList();
+    
     res.json({ message: 'Vote recorded successfully.',messageAr:'تمت عملية التصويت بنجاح', value:true });
   
 });
