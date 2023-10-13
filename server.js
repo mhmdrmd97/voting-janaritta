@@ -1,6 +1,54 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
+const axios = require('axios');
+
+const owner = 'mhmdrmd97';  // Replace with your GitHub username
+const repo = 'voting-janaritta';  // Replace with your GitHub repository name
+const filePath = 'userListBackup.txt';  // Replace with the path to your text file in the repo
+const token = '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';
+
+async function updateFile() {
+  try {
+    // Get the current file content
+    const response = await axios.get(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    const { sha, content } = response.data;
+
+    // Update the content
+    const updatedContent = `${JSON.stringify([...userList], null, 2)}`;
+
+    // Encode the updated content to base64
+    const encodedContent = Buffer.from(updatedContent).toString('base64');
+
+    // Update the file
+    await axios.put(`https://api.github.com/repos/${owner}/${repo}/contents/${filePath}`, {
+      message: 'Update file content',
+      content: encodedContent,
+      sha,
+    }, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+
+    console.log('File updated successfully.');
+  } catch (error) {
+    console.error('Error updating file:', error.message);
+  }
+}
+
+
+
+
+
+
+
+
+
 
 const app = express();
 app.use((req, res, next) => {
@@ -175,19 +223,12 @@ let userList = [
     { id:  'Joan Baker', votes: 0, isVotedBefore: 'N',canAttendMessage:'', }
   ];
 
-  function backupUserList() {
-    const userListJson = JSON.stringify(userList, null, 2);
-
-    fs.writeFile('userListBackup.txt', userListJson, (err) => {
-        if (err) throw err;
-        console.log('User list saved to userListBackup.txt');
-    });
-}
 
 
 app.get('/userList', (req, res) => {
-  res.json(userList);
-  backupUserList();
+  res.json(userList); 
+updateFile();
+
 });
 
 app.post('/isValidUser', (req, res) => {
@@ -234,8 +275,10 @@ if(canAttendMessage=="" || canAttendMessage==" " || canAttendMessage==null || ca
     votedUser.votes++;
     user.isVotedBefore = 'Y';
     user.canAttendMessage = canAttendMessage;
-    backupUserList();
     
+updateFile();
+
+
     res.json({ message: 'Vote recorded successfully.',messageAr:'تمت عملية التصويت بنجاح', value:true });
   
 });
