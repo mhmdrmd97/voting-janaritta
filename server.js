@@ -5,7 +5,7 @@ const axios = require('axios');
 const owner = 'mhmdrmd97';  // Replace with your GitHub username
 const repo = 'voting-janaritta';  // Replace with your GitHub repository name
 const filePath = 'userListBackup.txt';  // Replace with the path to your text file in the repo
-const token = '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';
+const token = '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';
 
 async function updateFile() {
   try {
