@@ -1,15 +1,15 @@
 [
   {
     "id": "John Doe",
-    "votes": 1,
+    "votes": 0,
     "isVotedBefore": "N",
     "canAttendMessage": ""
   },
   {
     "id": "Jane Smith",
     "votes": 0,
-    "isVotedBefore": "Y",
-    "canAttendMessage": "wooooooohooooooooo"
+    "isVotedBefore": "N",
+    "canAttendMessage": ""
   },
   {
     "id": "Michael Johnson",
