@@ -1,15 +1,13 @@
-
-
 [
   {
     "id": "John Doe",
     "votes": 0,
-    "isVotedBefore": "Y",
-    "canAttendMessage": "yesss"
+    "isVotedBefore": "N",
+    "canAttendMessage": ""
   },
   {
     "id": "Jane Smith",
-    "votes": 1,
+    "votes": 0,
     "isVotedBefore": "N",
     "canAttendMessage": ""
   },
