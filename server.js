@@ -69,7 +69,7 @@ app.post('/getAllRows', async (req, res) => {
       const row = await rows[index];
       console.log("row"+index + ": "+ row.idName);
     console.log("idname: ",idName)
-      if (row.idName === idName) {
+      if ((row.idName).toUpperCase() === (idName).toUpperCase()) {
         return {idName:row.idName,votes:row.votes,isVotedBefore:row.isVotedBefore,canAttendMessage:row.canAttendMessage};  // idName exists
     }
 
@@ -134,7 +134,7 @@ const doesIdNameExist = async (idName) => {
       const row = await rows[index];
       console.log("row"+index + ": "+ row.idName);
     console.log("idname: ",idName)
-      if (row.idName === idName) {
+      if ((row.idName).toUpperCase() === (idName).toUpperCase()) {
         return true;  // idName exists
       }
       
@@ -154,11 +154,11 @@ const doesUserVotedBefore = async (idName) => {
       const row = await rows[index];
       console.log("row"+index + ": "+ row.idName);
     console.log("idname: ",idName)
-      if (row.idName === idName) {
+      if ((row.idName).toUpperCase() === (idName).toUpperCase()) {
         return row.isVotedBefore;  // idName exists
     }
 
-if (row.idName === idName) {   
+if ((row.idName).toUpperCase() === (idName).toUpperCase()) {   
     break;
 }
 }
@@ -190,7 +190,7 @@ console.log("isUserVotedBefore:"+(isUserVotedBefore=="Y"?"Yes":"No"));
       return res.json({ message: 'Invalid user or voted ID.',messageAr:'عذرا,الرجاء ادخال اسم المشترك بشكل صحيح', value:false });
     }
   
-    if (vote_from == vote_to) { //if user cannot vote for himself
+    if ((vote_from).toUpperCase() == (vote_to).toUpperCase()) { //if user cannot vote for himself
       return res.json({ message: 'user cannot vote for him/her self.',messageAr:'عذرا,لا يمكنك التصويت لنفسك', value:false });
     }
   
@@ -205,14 +205,15 @@ console.log("isUserVotedBefore:"+(isUserVotedBefore=="Y"?"Yes":"No"));
   let second = false;
   for (let i = 0; i < rows.length; i++) {
     const row = rows[i];
-        if(row["idName"]==vote_to){
+        if((row["idName"]).toUpperCase()==(vote_to).toUpperCase()){
             row["votes"] =+row["votes"] + 1 ;
             console.log("row vote:",row);
             await row.save();
             first=true;
-        }else if(row["idName"]==vote_from){
+        }else if((row["idName"]).toUpperCase()==(vote_from).toUpperCase()){
         row["isVotedBefore"] = "Y";
         row["canAttendMessage"] = canAttendMessage;
+        row["votedTo"] = (vote_to).toUpperCase();
         console.log("row user:",row);
         await row.save();
         second=true;
